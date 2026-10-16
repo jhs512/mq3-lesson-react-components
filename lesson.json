@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "id": "react-components",
+  "revision": "v1.0.0",
+  "title": "React 컴포넌트·props·목록",
+  "description": "JSX로 화면을 나누고 값을 전달해요.",
+  "sources": [
+    "https://slog.gg/p/14149"
+  ],
+  "sections": [
+    {
+      "id": "reading-1",
+      "title": "함수로 화면 만들기",
+      "body": "React 컴포넌트는 JSX를 반환하는 함수예요.\n이름은 대문자로 시작해요.\nJSX는 HTML과 닮았지만 JavaScript 문법이에요.\nclass 대신 className을 사용하세요.\n중괄호 안에는 JavaScript 표현식을 넣어요.\n부모는 props로 자식에게 값을 전달해요.\n조심하세요. 자식이 props를 직접 바꾸면 안 돼요.\n먼저 카드 한 개를 화면에 표시하세요.\n다음에는 props로 제목을 바꾸고 다시 실행해요.\n"
+    },
+    {
+      "id": "reading-2",
+      "title": "목록과 안정된 key",
+      "body": "자료 목록을 map으로 컴포넌트 목록으로 바꿔요.\nkey는 같은 항목을 다음 화면에서도 찾게 해줘요.\n삭제와 순서 변경이 있으면 배열 위치를 피하세요.\n자료의 ID를 key로 사용하는 것이 적절해요.\n이 앱은 JSX를 실제 React 코드로 빌드해요.\nApp.jsx만 편집하고 root 연결은 유지하세요.\n"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "lesson-cards",
+      "title": "props로 수업 카드 재사용하기",
+      "goal": "h1 `수업 목록`과 article.lesson 세 개를 표시하세요.\n각 카드의 h2는 Git, Java, React 순서예요.\nGit·Java에는 `필수`, React에는 `선택`을 표시해요.\nLessonCard 컴포넌트에 props를 전달해보세요.",
+      "language": "web",
+      "entry_file": "App.jsx",
+      "starter_code": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\n// 컴포넌트를 작성하세요.\ncreateRoot(document.getElementById('root')).render(<h1>준비 중</h1>);\n",
+      "solution": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nfunction LessonCard({title, required}) {\n  // props는 부모가 전달한 값이에요. 직접 바꾸지 않아요.\n  return <article className=\"lesson\"><h2>{title}</h2>\n    <span>{required ? '필수' : '선택'}</span></article>;\n}\nfunction App() {\n  const lessons=[{id:'git',title:'Git',required:true},{id:'java',title:'Java',required:true},{id:'react',title:'React',required:false}];\n  // 안정된 ID를 key로 사용해요.\n  return <main><h1>수업 목록</h1>{lessons.map(lesson=><LessonCard key={lesson.id} {...lesson}/>)}</main>;\n}\ncreateRoot(document.getElementById('root')).render(<App/>);\n",
+      "files": {
+        "index.html": "<!doctype html>\n<html lang=\"ko\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<style></style>\n<body>\n<div id=\"root\"></div>\n<script src=\"app.js\"></script>\n</body></html>\n"
+      },
+      "tests": [],
+      "web_checks": [
+        {
+          "kind": "text",
+          "selector": "h1",
+          "pattern": "^수업 목록$"
+        },
+        {
+          "kind": "count",
+          "selector": "article.lesson",
+          "value": 3
+        },
+        {
+          "kind": "text",
+          "selector": "article.lesson:nth-of-type(1)",
+          "pattern": "Git.*필수"
+        },
+        {
+          "kind": "text",
+          "selector": "article.lesson:nth-of-type(2)",
+          "pattern": "Java.*필수"
+        },
+        {
+          "kind": "text",
+          "selector": "article.lesson:nth-of-type(3)",
+          "pattern": "React.*선택"
+        }
+      ],
+      "mutations": [],
+      "required": true,
+      "narration": [
+        {
+          "action": "say",
+          "target": "problem",
+          "text": "h1 `수업 목록`과 article.lesson 세 개를 표시하세요.\n각 카드의 h2는 Git, Java, React 순서예요.\nGit·Java에는 `필수`, React에는 `선택`을 표시해요.\nLessonCard 컴포넌트에 props를 전달해보세요."
+        },
+        {
+          "action": "say",
+          "target": "editor",
+          "text": "조심하세요. 실행 성공과 모든 검사 통과는 달라요. 단계마다 결과를 확인해요."
+        },
+        {
+          "action": "set_code",
+          "code": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nfunction LessonCard({title, required}) {\n  // props는 부모가 전달한 값이에요. 직접 바꾸지 않아요.\n  return <article className=\"lesson\"><h2>{title}</h2>\n    <span>{required ? '필수' : '선택'}</span></article>;\n}\nfunction App() {\n  const lessons=[{id:'git',title:'Git',required:true},{id:'java',title:'Java',required:true},{id:'react',title:'React',required:false}];\n  // 안정된 ID를 key로 사용해요.\n  return <main><h1>수업 목록</h1>{lessons.map(lesson=><LessonCard key={lesson.id} {...lesson}/>)}</main>;\n}\n",
+          "say": "컴포넌트 함수를 먼저 준비해요. 아직 화면에 연결하지 않았어요."
+        },
+        {
+          "action": "run"
+        },
+        {
+          "action": "say",
+          "target": "output",
+          "text": "화면은 아직 비어 있어요. 이제 루트에 컴포넌트를 연결해요."
+        },
+        {
+          "action": "patch_code",
+          "before": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nfunction LessonCard({title, required}) {\n  // props는 부모가 전달한 값이에요. 직접 바꾸지 않아요.\n  return <article className=\"lesson\"><h2>{title}</h2>\n    <span>{required ? '필수' : '선택'}</span></article>;\n}\nfunction App() {\n  const lessons=[{id:'git',title:'Git',required:true},{id:'java',title:'Java',required:true},{id:'react',title:'React',required:false}];\n  // 안정된 ID를 key로 사용해요.\n  return <main><h1>수업 목록</h1>{lessons.map(lesson=><LessonCard key={lesson.id} {...lesson}/>)}</main>;\n}\n",
+          "after": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nfunction LessonCard({title, required}) {\n  // props는 부모가 전달한 값이에요. 직접 바꾸지 않아요.\n  return <article className=\"lesson\"><h2>{title}</h2>\n    <span>{required ? '필수' : '선택'}</span></article>;\n}\nfunction App() {\n  const lessons=[{id:'git',title:'Git',required:true},{id:'java',title:'Java',required:true},{id:'react',title:'React',required:false}];\n  // 안정된 ID를 key로 사용해요.\n  return <main><h1>수업 목록</h1>{lessons.map(lesson=><LessonCard key={lesson.id} {...lesson}/>)}</main>;\n}\ncreateRoot(document.getElementById('root')).render(<App/>);\n"
+        },
+        {
+          "action": "run"
+        },
+        {
+          "action": "say",
+          "target": "output",
+          "text": "완성한 화면을 확인하세요. 입력과 버튼도 직접 사용해보세요."
+        }
+      ],
+      "source_hash": "c7a8453a1c3fcb9828888e4ba9e73c0a00b62bd4a2ef1b0a8a53bc1ba6cf808c"
+    },
+    {
+      "id": "reusable-links",
+      "title": "목적지가 다른 링크 컴포넌트",
+      "goal": "Link 컴포넌트에 href와 children을 전달해요.\nnav 안에 `GitHub`, `React` 링크를 표시하세요.\n주소는 각각 https://github.com 과 https://react.dev 예요.",
+      "language": "web",
+      "entry_file": "App.jsx",
+      "starter_code": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\n// 컴포넌트를 작성하세요.\ncreateRoot(document.getElementById('root')).render(<h1>준비 중</h1>);\n",
+      "solution": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nfunction Link({href,children}) {\n    // 링크의 내용도 props로 전달받아요.\n    return <a href={href}>{children}</a>;\n}\nfunction App() {\n    // 같은 컴포넌트에 서로 다른 값을 전달해요.\n    return <nav><Link href=\"https://github.com\">GitHub</Link>\n        <Link href=\"https://react.dev\">React</Link></nav>;\n}\ncreateRoot(document.getElementById('root')).render(<App/>);\n",
+      "files": {
+        "index.html": "<!doctype html>\n<html lang=\"ko\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<style></style>\n<body>\n<div id=\"root\"></div>\n<script src=\"app.js\"></script>\n</body></html>\n"
+      },
+      "tests": [],
+      "web_checks": [
+        {
+          "kind": "count",
+          "selector": "nav a",
+          "value": 2
+        },
+        {
+          "kind": "attribute",
+          "selector": "nav a:text-is(\"GitHub\")",
+          "name": "href",
+          "value": "https://github.com"
+        },
+        {
+          "kind": "attribute",
+          "selector": "nav a:text-is(\"React\")",
+          "name": "href",
+          "value": "https://react.dev"
+        }
+      ],
+      "mutations": [],
+      "required": true,
+      "narration": [
+        {
+          "action": "say",
+          "target": "problem",
+          "text": "Link 컴포넌트에 href와 children을 전달해요.\nnav 안에 `GitHub`, `React` 링크를 표시하세요.\n주소는 각각 https://github.com 과 https://react.dev 예요."
+        },
+        {
+          "action": "say",
+          "target": "editor",
+          "text": "조심하세요. 실행 성공과 모든 검사 통과는 달라요. 단계마다 결과를 확인해요."
+        },
+        {
+          "action": "set_code",
+          "code": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nfunction Link({href,children}) {\n    // 링크의 내용도 props로 전달받아요.\n    return <a href={href}>{children}</a>;\n}\nfunction App() {\n    // 같은 컴포넌트에 서로 다른 값을 전달해요.\n    return <nav><Link href=\"https://github.com\">GitHub</Link>\n        <Link href=\"https://react.dev\">React</Link></nav>;\n}\n",
+          "say": "컴포넌트 함수를 먼저 준비해요. 아직 화면에 연결하지 않았어요."
+        },
+        {
+          "action": "run"
+        },
+        {
+          "action": "say",
+          "target": "output",
+          "text": "화면은 아직 비어 있어요. 이제 루트에 컴포넌트를 연결해요."
+        },
+        {
+          "action": "patch_code",
+          "before": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nfunction Link({href,children}) {\n    // 링크의 내용도 props로 전달받아요.\n    return <a href={href}>{children}</a>;\n}\nfunction App() {\n    // 같은 컴포넌트에 서로 다른 값을 전달해요.\n    return <nav><Link href=\"https://github.com\">GitHub</Link>\n        <Link href=\"https://react.dev\">React</Link></nav>;\n}\n",
+          "after": "import React from 'react';\nimport {createRoot} from 'react-dom/client';\nfunction Link({href,children}) {\n    // 링크의 내용도 props로 전달받아요.\n    return <a href={href}>{children}</a>;\n}\nfunction App() {\n    // 같은 컴포넌트에 서로 다른 값을 전달해요.\n    return <nav><Link href=\"https://github.com\">GitHub</Link>\n        <Link href=\"https://react.dev\">React</Link></nav>;\n}\ncreateRoot(document.getElementById('root')).render(<App/>);\n"
+        },
+        {
+          "action": "run"
+        },
+        {
+          "action": "say",
+          "target": "output",
+          "text": "완성한 화면을 확인하세요. 입력과 버튼도 직접 사용해보세요."
+        }
+      ],
+      "source_hash": "e14228b6a112843672aaade7357ba406ce4913439be949c14ce92c176971a0be"
+    }
+  ]
+}
